@@ -77,7 +77,7 @@ of local media (e.g. File > Open File), you need to grant additional permissions
 to the extension.
 
 - In a new tab, navigate to `chrome://extensions`
-- Find "Video Speed Controller" extension in the list and enable "Allow access
+- Find the "Watch Faster" extension in the list and enable "Allow access
   to file URLs"
 - Open a new tab and try opening a local file, the controls should show up
 

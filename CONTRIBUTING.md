@@ -1,6 +1,6 @@
 # Contributing
 
-Video Speed Controller is an open source project licensed under the MIT license
+Watch Faster is an open source project licensed under the MIT license
 with many contributers. Contributions are welcome, and greatly appreciated.
 
 If you would like to help, getting started is easy.
@@ -12,8 +12,8 @@ If you would like to help, getting started is easy.
 3. Once the fork is ready, clone to your local PC
 
    ```sh
-   $ git clone https://github.com/<USERNAME>/videospeed.git
-   Cloning into 'videospeed'...
+   $ git clone https://github.com/<USERNAME>/watch-faster.git
+   Cloning into 'watch-faster'...
     remote: Enumerating objects: 10, done.
     remote: Counting objects: 100% (10/10), done.
     remote: Compressing objects: 100% (9/9), done.
@@ -25,13 +25,13 @@ If you would like to help, getting started is easy.
 4. Create a branch for your changes
 
    ```sh
-    $ cd videospeed
-    videospeed$ git checkout -b bugfix/1-fix-double-click
+    $ cd watch-faster
+    watch-faster$ git checkout -b bugfix/1-fix-double-click
     M   .github/workflows/chrome-store-upload.yaml
     M   README.md
     M   options.js
     Switched to a new branch 'bugfix/1-fix-double-click'
-    videospeed$
+    watch-faster$
    ```
 
 5. Open the code in your favorite code editor, make your changes
@@ -48,7 +48,7 @@ If you would like to help, getting started is easy.
 6. Next, open Chrome/Brave/Chromium and enable developer mode via
    `Settings > Extensions > Manage Extensions` and toggle `Developer mode` in
    the top-right corner.
-7. Click `Load unpacked` and browse to the folder you cloned videospeed to.
+7. Click `Load unpacked` and browse to the folder where you cloned the repo.
 8. Try out your changes, make sure they work as expected
 9. Commit and push your changes to github
 
@@ -79,7 +79,7 @@ pre-commit checks before committing via `pre-commit run --all-files`
 You should always be working with the latest version of the tool to make pull
 requests easy. If you want to do this easily, just add a second remote to your
 local git repo like this
-`git remote add upstream https://github.com/igrigorik/videospeed.git`
+`git remote add upstream git@github.com:russelldavis/watch-faster.git`
 
 Now any time you like to pull the latest version in to your local branch you can
 simply issue the command `git pull upstream master`
