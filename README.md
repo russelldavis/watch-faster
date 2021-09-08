@@ -1,8 +1,8 @@
-# The science of accelerated playback
+# Watch Faster: Speed up (or slow down) videos
 
 **TL;DR: faster playback translates to better engagement and retention.**
 
-Average adult reads prose text at
+The average adult reads prose text at
 [250 to 300 words per minute](http://www.paperbecause.com/PIOP/files/f7/f7bb6bc5-2c4a-466f-9ae7-b483a2c0dca4.pdf)
 (wpm). By contrast, the average rate of speech for English speakers is ~150 wpm,
 with slide presentations often closer to 100 wpm. As a result, when given the
@@ -18,10 +18,8 @@ studies report that after being exposed to accelerated playback,
 [listeners become uncomfortable](http://alumni.media.mit.edu/~barons/html/avios92.html#beasleyalteredspeech)
 if they are forced to return to normal rate of presentation.
 
-## Faster HTML5 Video
-
-HTML5 video provides a native API to accelerate playback of any video. The
-problem is, many players either hide, or limit this functionality. For best
+## Speed Controls
+Many video players lack robust speed controls. For best
 results playback speed adjustments should be easy and frequent to match the pace
 and content being covered: we don't read at a fixed speed, and similarly, we
 need an easy way to accelerate the video, slow it down, and quickly rewind the
@@ -82,6 +80,14 @@ to the extension.
 - Find "Video Speed Controller" extension in the list and enable "Allow access
   to file URLs"
 - Open a new tab and try opening a local file, the controls should show up
+
+### History
+
+This extension was forked from the fantastic [Video Speed Controller]
+(https://github.com/igrigorik/videospeed) extension in Sep. 2021. Huge thanks to
+[@igrigorik](igrigorik) and all other contributors for such a great project.
+Watch Faster was created in order to fix issues, add new features, and provide
+updates at a... faster speed (so meta).
 
 ### License
 
