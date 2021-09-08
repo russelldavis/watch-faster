@@ -88,7 +88,3 @@ This extension was forked from the fantastic [Video Speed Controller]
 [@igrigorik](igrigorik) and all other contributors for such a great project.
 Watch Faster was created in order to fix issues, add new features, and provide
 updates at a... faster speed (so meta).
-
-### License
-
-(MIT License) - Copyright (c) 2014 Ilya Grigorik
