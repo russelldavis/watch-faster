@@ -569,6 +569,8 @@ function initializeNow(document) {
     if (inIframe()) docs.push(window.top.document);
   } catch (e) {}
 
+  const isReddit = /\.?reddit.com$/.test(location.hostname);
+
   docs.forEach(function (doc) {
     doc.addEventListener(
       "keydown",
@@ -601,6 +603,11 @@ function initializeNow(document) {
 
         // Ignore keydown event if typing in a page without vsc
         if (!tc.mediaElements.length) {
+          return false;
+        }
+
+        // Disable 'i' shortcut in reddit, conflicts with my RES shortcuts
+        if (isReddit && keyCode === 73 && !event.shiftKey) {
           return false;
         }
 
