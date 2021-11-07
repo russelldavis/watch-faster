@@ -626,7 +626,7 @@ function initializeNow(document) {
     }
     if (
       node.nodeName === "VIDEO" ||
-      (node.nodeName === "AUDIO" && tc.settings.audioBoolean)
+      (node.nodeName === "AUDIO" && audioTagsEnabled())
     ) {
       if (added) {
         node.vsc = new tc.videoController(node, parent);
@@ -698,7 +698,7 @@ function initializeNow(document) {
     subtree: true
   });
 
-  if (tc.settings.audioBoolean) {
+  if (audioTagsEnabled()) {
     var mediaTags = document.querySelectorAll("video,audio");
   } else {
     var mediaTags = document.querySelectorAll("video");
@@ -928,4 +928,10 @@ function showController(controller) {
     timer = false;
     log("Hiding controller", 5);
   }, 2000);
+}
+
+function audioTagsEnabled() {
+  return tc.settings.audioBoolean &&
+    // chess.com has hidden audio elements for preloading
+    location.hostname !== "www.chess.com";
 }
