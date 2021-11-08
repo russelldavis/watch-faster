@@ -606,7 +606,11 @@ function initializeNow(document) {
         var item = tc.settings.keyBindings.find((item) => item.key === keyCode);
         if (item) {
           runAction(item.action, item.value);
-          if (item.force === "true") {
+          if (item.force === "true" ||
+            /\.?youtube.com$/.test(location.hostname) ||
+            // chess.com plays a weird noise when you press i
+            (keyCode === 73 && /\.?chess.com.com$/.test(location.hostname))
+          ) {
             // disable websites key bindings
             event.preventDefault();
             event.stopPropagation();
