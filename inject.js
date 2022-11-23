@@ -180,6 +180,10 @@ function defineVideoController() {
     tc.mediaElements.push(target);
 
     this.video = target;
+    window.addEventListener("click", () => console.log("ccccccccc"), true)
+    window.addEventListener("mousedown", () => console.log("ddddddd"), true)
+    window.addEventListener("mouseup", () => console.log("uuuuuuuuuu"), true)
+
     this.parent = target.parentElement || parent;
     storedSpeed = tc.settings.speeds[target.currentSrc];
     if (!tc.settings.rememberSpeed) {
@@ -424,6 +428,26 @@ function refreshCoolDown() {
   log("End refreshCoolDown", 5);
 }
 
+function checkFullScreenElement() {
+  const vsc = document.fullscreenElement?.vsc;
+  console.log("aaaaaaaa checking", vsc)
+  if (vsc instanceof tc.videoController) {
+    console.log("bbbbbbbb", vsc.div)
+    // vsc.div.parentElement.requestFullscreen();
+  }
+}
+
+function setupFullScreenListeners() {
+  console.log("adding listeners")
+  document.addEventListener("fullscreenchange", checkFullScreenElement);
+  // The fullscreenchange event doesn't fire when fullscreen mode is initiated
+  // from the builtin controls on a <video> element, so we also rely on the
+  // window resize event. This won't catch the case where the user clicks the
+  // fullscreen button a video when the whole page is already in fullscreen
+  // mode, but it's the best we can do.
+  window.addEventListener("resize", checkFullScreenElement);
+}
+
 function setupListener() {
   /**
    * This function is run whenever a video speed rate change occurs.
@@ -544,6 +568,7 @@ function initializeNow(document) {
   } catch {
     // no operation
   }
+  setupFullScreenListeners();
   document.body.classList.add("vsc-initialized");
   log("initializeNow: vsc-initialized added to document body", 5);
 
