@@ -338,44 +338,68 @@ function defineVideoController() {
       );
     });
 
-    shadow
-      .querySelector("#controller")
-      .addEventListener("click", (e) => e.stopPropagation(), false);
-    shadow
-      .querySelector("#controller")
-      .addEventListener("mousedown", (e) => e.stopPropagation(), false);
+    const controller = shadow.querySelector("#controller");
+    controller.addEventListener("click", (e) => e.stopPropagation(), false);
+    controller.addEventListener("mousedown", (e) => e.stopPropagation(), false);
 
     this.speedIndicator = shadow.querySelector("span");
     var fragment = document.createDocumentFragment();
     fragment.appendChild(wrapper);
+    // Note: when triggered via a MutationRecord, it's possible that the
+    // target is not the immediate parent. This appends the controller as
+    // the first element of the target, which may not be the parent.
+    this.parent.insertBefore(fragment, this.parent.firstChild);
 
-    switch (true) {
-      // Only special-case Prime Video, not product-page videos (which use
-      // "vjs-tech"), otherwise the overlay disappears in fullscreen mode
-      case location.hostname == "www.amazon.com" && !this.video.classList.contains("vjs-tech"):
-      case location.hostname == "www.reddit.com":
-      case /hbogo\./.test(location.hostname):
-        // insert before parent to bypass overlay
-        this.parent.parentElement.insertBefore(fragment, this.parent);
-        break;
-      case location.hostname == "www.facebook.com":
-        // this is a monstrosity but new FB design does not have *any*
-        // semantic handles for us to traverse the tree, and deep nesting
-        // that we need to bubble up from to get controller to stack correctly
-        let p = this.parent.parentElement.parentElement.parentElement
-          .parentElement.parentElement.parentElement.parentElement;
-        p.insertBefore(fragment, p.firstChild);
-        break;
-      case location.hostname == "tv.apple.com":
-        // insert before parent to bypass overlay
-        this.parent.parentNode.insertBefore(fragment, this.parent.parentNode.firstChild);
-        break;
-      default:
-        // Note: when triggered via a MutationRecord, it's possible that the
-        // target is not the immediate parent. This appends the controller as
-        // the first element of the target, which may not be the parent.
-        this.parent.insertBefore(fragment, this.parent.firstChild);
-    }
+    const resizeObserver = new ResizeObserver(([entry]) => {
+      // resizeObserver.disconnect();
+      console.log("RRRRRRRRRRRRRRRR", entry);
+    });
+    resizeObserver.observe(wrapper);
+    resizeObserver.observe(controller);
+    // requestAnimationFrame(() => {
+    //   setTimeout(() => {
+        new IntersectionObserver(([entry], observer) => {
+          if (!entry.isIntersecting) return;
+          // We only care about the first time the controller comes into view
+          observer.disconnect();
+
+          // requestAnimationFrame(() => {
+          //   setTimeout(() => {
+              const controllerRect = controller.getBoundingClientRect();
+              let el = document.elementFromPoint(
+                // Adding 5 to reduce chances of hitting barely overlapping elements
+                controllerRect.left + 5,
+                controllerRect.top + 5
+              );
+              console.log("ellllllll", el, entry)
+              if (el === wrapper) {
+                console.log("goooooooooood", this.video.readyState)
+                return;
+              }
+
+              const videoRect = this.video.getBoundingClientRect();
+              while (el) {
+                const elRect = el.getBoundingClientRect();
+                if (
+                  elRect.left <= controllerRect.left &&
+                  elRect.top <= controllerRect.top &&
+                  elRect.bottom >= controllerRect.bottom &&
+                  elRect.right >= controllerRect.right
+                ) {
+                  console.log("Moving vsc-controller to an overlay:", el, this.video.readyState);
+                  el.insertBefore(wrapper, el.firstChild);
+                  // TODO: Left off here. Update position to account for offset of
+                  // elRect relative to video.
+                  return;
+                }
+                el = el.parentElement;
+              }
+          //   })
+          // })
+        }).observe(controller);
+    //   })
+    // })
+
     return wrapper;
   };
 }
