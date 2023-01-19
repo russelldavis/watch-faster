@@ -461,10 +461,23 @@ function setupListener() {
   document.addEventListener(
     "ratechange",
     function (event) {
-      if (coolDown) {
-        log("Speed event propagation blocked", 4);
-        event.stopImmediatePropagation();
-      }
+      // This "cool down" event blocking is really only needed on sites that
+      // try to prevent you from changing the videospeed, like twitch.tv
+      // (see https://github.com/igrigorik/videospeed/commit/9b8f9dfbaec462bef29c12064efa8bd5202c4fc0).
+      //
+      // However, it breaks other sites that have legitimate use for the
+      // ratechange event, like Youtube:
+      // - Chapter titles get out of sync with the video if you change speed while watching
+      // - SponsorBlock can get out of sync as well, see:
+      //   - https://github.com/igrigorik/videospeed/issues/683
+      //   - https://github.com/igrigorik/videospeed/pull/740
+      //
+      // So, I'm commenting it out.
+      //
+      // if (coolDown) {
+      //   log("Speed event propagation blocked", 4);
+      //   event.stopImmediatePropagation();
+      // }
       var video = event.target;
 
       /**
